@@ -1,0 +1,76 @@
+/*
+* @author: Sunil Kumar R
+*/
+
+#include <stdio.h>
+
+/*
+  Method returns the Max Amount robbed by the robber, see below for problem statement:
+  Problem statement :
+    A robber enters a colony of houses numbered from 1 to n.  Every house has 
+    a number printed on the top of it.  That number is the amount of money inside
+    that house. However, there is one constraint. 
+    If the robber robs i-th house, he can't rob house no i-1 and house no i+1. 
+    How can the robber maximise his robbery?
+*/
+static int GetMaxAmountRobbed(int amount_in_house[], int num_of_houses)
+{
+  int idx = 0;
+  int temp[5] = {0};
+
+  /*if total number of houses is one, then return the amount at zeroth house*/
+  if (num_of_houses == 1)
+  {
+      return amount_in_house[0];
+  }
+  /*if total number of houses is two, then return the max of both the houses*/
+
+  if (num_of_houses == 2)
+  {
+      return amount_in_house[0] > amount_in_house[1] ? amount_in_house[0] : amount_in_house[1];
+  }
+
+  temp[0] = amount_in_house[0];
+  temp[1] = amount_in_house[1];
+  
+  for(idx = 2; idx < num_of_houses; idx++)
+  {
+      /*this temp array variable is used to compare the amount in house with the temporary amount already robbed in the previous houses*/
+      temp [idx] = (temp[idx-2] + amount_in_house[idx]) > temp[idx-1] ? 
+                                  (temp[idx-2] + amount_in_house[idx]) : temp[idx-1];
+  }
+  printf("temp[idx-1] = %d\n",temp[idx-1]);
+  
+  return temp[idx-1];
+}
+
+// Main function.
+int main()
+{
+  int amount_in_house[5] = {0};
+  int num_of_houses = 0;
+  int idx = 0;
+  int robbed_amt = 0;
+  
+  /* Read the number of houses in the are at runtime.*/
+  printf("Enter the number of houses present in the area \n");
+  scanf("%d",&num_of_houses);
+
+  
+  if (num_of_houses > 0)
+  {
+      for (idx = 0; idx < num_of_houses; idx++)
+      {
+          printf("Fill the amount present in house[%d] -> ",idx);
+          scanf("%d",&amount_in_house[idx]);
+      }
+      robbed_amt = GetMaxAmountRobbed(amount_in_house, num_of_houses);
+      printf("Max Amount robbed is %d\n", robbed_amt);
+  }
+  else
+  {
+      printf("%s [oops Invalid Input !!!]\n", num_of_houses == 0 ? "Zero entered" : "Negative Value Entered");
+  }
+  
+  return 0;
+}
