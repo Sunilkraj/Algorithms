@@ -51,16 +51,16 @@ BCA
 /*---------------------------Explanation---------------------------*/
 /*
                                     first iteration (i = 1, l = 1, r = 2, str = ABC)			
-str = ABC					|------ swap(a[1],a[1])=>ABC		  						i = 1, l = 2, r = 2
-i = 0, l = 0, r = 2			|       permute(ABC,2,2) => ------------------------------->l == r => PRINT ABC !!!!
+str = ABC		    |------ swap(a[1],a[1])=>ABC		  						i = 1, l = 2, r = 2
+i = 0, l = 0, r = 2	    |       permute(ABC,2,2) => ------------------------------->l == r => PRINT ABC !!!!
 swap(a[0],a[0])=>ABC        |       swap(a[1], a[1])=>ABC
 permute(ABC,1,2)----------->|
 swap(a[0],a[0])=>ACB        |
-		|					|		next iteration (i = 2, l = 1, r = 2, STR = ABC)
-		|					|-------swap(a[1],a[2])=>ACB		  						i = 2, l = 2, r = 2
-		|							permute(ACB,2,2) => ------------------------------->l == r => PRINT ACB !!!!
-		|							swap(a[1],a[1])=>ACB ---->|
-		|<--------------------------<---------------------<---|
+		|	    |       next iteration (i = 2, l = 1, r = 2, STR = ABC)
+		|	    |-------swap(a[1],a[2])=>ACB		  						i = 2, l = 2, r = 2
+		|	    	    permute(ACB,2,2) => ------------------------------->l == r => PRINT ACB !!!!
+		|	            swap(a[1],a[1])=>ACB ---->|
+		|<--------------------------<-------------<---|
 									
 
                                     first iteration (i = 1, l = 1, r = 2, str = CAB)
