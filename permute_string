@@ -1,0 +1,90 @@
+//program to print all permutations with duplicates allowed
+#include <stdio.h>
+#include <string.h>
+ 
+/* Function to swap values at two pointers */
+void swap(char *x, char *y)
+{
+    char temp;
+    temp = *x;
+    *x = *y;
+    *y = temp;
+}
+ 
+/* Function to print permutations of string
+   This function takes three parameters:
+   1. String
+   2. Starting index of the string
+   3. Ending index of the string. 
+*/
+void permute(char *a, int l, int r)
+{
+   int i;
+   if (l == r)
+     printf("%s\n", a);
+   else
+   {
+       for (i = l; i <= r; i++)
+       {
+          swap((a+l), (a+i));
+          permute(a, l+1, r);
+          swap((a+l), (a+i)); //backtrack
+       }
+   }
+}
+ 
+int main()
+{
+    char str[] = "ABC";
+    int n = strlen(str);
+    permute(str, 0, n-1);
+    return 0;
+}
+output: 
+ABC
+ACB
+CAB 
+CBA
+BAc
+BCA
+
+/*---------------------------Explanation---------------------------*/
+/*
+                                    first iteration (i = 1, l = 1, r = 2, str = ABC)			
+str = ABC				  	        |------ swap(a[1],a[1])=>ABC		  						i = 1, l = 2, r = 2
+i = 0, l = 0, r = 2			    |       permute(ABC,2,2) => ------------------------------->l == r => PRINT ABC !!!!
+swap(a[0],a[0])=>ABC        |       swap(a[1], a[1])=>ABC
+permute(ABC,1,2)----------->|
+swap(a[0],a[0])=>ACB        |
+		|					              |		    next iteration (i = 2, l = 1, r = 2, STR = ABC)
+		|					              |-------swap(a[1],a[2])=>ACB		  						i = 2, l = 2, r = 2
+		|							                  permute(ACB,2,2) => ------------------------------->l == r => PRINT ACB !!!!
+		|							                  swap(a[1],a[1])=>ACB ---->|
+		|<--------------------------<---------------------<-------|
+									
+
+                                    first iteration (i = 1, l = 1, r = 2, str = CAB)
+str = ACB					          |--->-- swap(a[1],a[1])=>CAB		  						i = 1, l = 2, r = 2
+i = 1, l = 0, r = 2			    |       permute(CAB,2,2) => ------------------------------->l == r => PRINT CAB !!!!
+swap(a[0],a[1])=>CAB        |       swap(a[1], a[1])=>CAB
+permute(CAB,1,2)----------->|
+swap(a[0],a[1])=>CBA        |
+		|					              |		    next iteration (i = 2, l = 1, r = 2 str = CAB)
+		|					              |---->--swap(a[1],a[2])=>CBA		  						i = 2, l = 2, r = 2
+		|							                  permute(CBA,2,2) => ------------------------------->l == r => PRINT CBA !!!!
+		|							                  swap(a[1],a[1])=>CBA ---->|
+		|<--------------------------<---------------------<-------|
+
+
+		                            first iteration (i = 1, l = 1, r = 2, str = BAC)
+str = CBA					          |--->-- swap(a[1],a[1])=>BAC		  						i = 1, l = 2, r = 2
+i = 2, l = 0, r = 2			    |       permute(BAC,2,2) => -------------------------------> l == r => PRINT BAC !!!!
+swap(a[0],a[2])=>CAB        |       swap(a[1], a[1])=>BAC
+permute(BAC,1,2)----------->|
+swap(a[0],a[1])=>BCA        |
+		|					              |		    next iteration (i = 2, l = 1, r = 2 str = BAC)
+		|					              |---->--swap(a[1],a[2])=>BCA		  						i = 2, l = 2, r = 2
+		|							                  permute(BCA,2,2) => ------------------------------->l == r => PRINT BCA !!!!
+		|							                  swap(a[1],a[1])=>BCA ---->|
+		|<--------------------------<---------------------<-------|
+*/
